@@ -11,6 +11,10 @@ def train(model, train_loader, optimizer, criterion, device, clip=1.0, teacher_f
         optimizer.zero_grad()
 
         output = model(src, tgt, teacher_forcing_ratio)
+
+        if isinstance(output, tuple): # For Attention Model
+            output = output[0]
+
         #print("output", output)
         output_dim = output.shape[-1]
         output = output[:, 1:].reshape(-1, output_dim)

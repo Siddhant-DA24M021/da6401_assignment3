@@ -28,7 +28,7 @@ class Encoder(nn.Module):
     def forward(self, input):
         # input: batch_size x seq_len
 
-        embeddings = self.embedding(input)
+        embeddings = self.embedding(input) # (batch, seq_len, embedding_size)
         embeddings = self.dropout(embeddings)
 
         if self.cell_type == 'LSTM':
@@ -37,7 +37,7 @@ class Encoder(nn.Module):
         else:
             outputs, hidden = self.recurrent_layer(embeddings)
             return outputs, hidden
-
+        
 
 class Decoder(nn.Module):
     def __init__(self, output_size, embedding_size, hidden_size, num_layers=1, cell_type="RNN", dropout=0.0):
@@ -82,7 +82,7 @@ class Decoder(nn.Module):
         outputs = outputs.squeeze(1)
         prediction = self.fc_out(outputs)
         return prediction, hidden
-    
+
 
 class Seq2Seq(nn.Module):
     def __init__(self, encoder, decoder, device):
@@ -109,10 +109,11 @@ class Seq2Seq(nn.Module):
         decoder_input = tgt[:, 0]
         for t in range(1, tgt_len):
             decoder_output, decoder_hidden = self.decoder(decoder_input, decoder_hidden)
+            #print(decoder_output.shape)
+            #break
             outputs[:, t] = decoder_output
-            teacher_force = random.random() < teacher_forcing_ratio
             top = decoder_output.argmax(1)
-            decoder_input = tgt[:, t] if teacher_force else top
+            decoder_input = tgt[:, t] if random.random() < teacher_forcing_ratio else top
         return outputs
 
 

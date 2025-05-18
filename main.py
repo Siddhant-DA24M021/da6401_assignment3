@@ -4,6 +4,8 @@ from data_utils import get_vocab, get_dataloader
 from train_utils import train
 from eval_utils import evaluate, transliterate, calculate_accuracy
 from tqdm import tqdm
+import pandas as pd
+import os
 
 
 # Data File Paths
@@ -112,13 +114,43 @@ def main():
 
         print(f"Epoch {epoch+1}/{NUM_EPOCHS}, Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
 
-    train_accuracy = calculate_accuracy(model, train_loader, src_vocab, tgt_vocab, device)
-    val_accuracy = calculate_accuracy(model, val_loader, src_vocab, tgt_vocab, device)
     test_accuracy = calculate_accuracy(model, test_loader, src_vocab, tgt_vocab, device)
-
-    print(f"Train Accuracy : {train_accuracy*100:6.2f}%")
-    print(f"Val Accuracy   : {val_accuracy*100:6.2f}%")
     print(f"Test Accuracy  : {test_accuracy*100:6.2f}%")
+    
+    # Predict and save on test set
+    model.eval()
+    latin = []
+    correct_native = []
+    predicted_native = []
+
+    with torch.no_grad():
+        for src, tgt in test_loader:
+            src = src.to(device)
+            tgt = tgt.to(device)
+
+            batch_size = src.shape[0]
+
+            for i in range(batch_size):
+                # Get source text and actual target text
+                src_indices = src[i].tolist()
+                src_text = src_vocab.decode(src_indices)
+                actual_tgt_text = tgt_vocab.decode(tgt[i].tolist())
+
+                # Get predicted transliteration
+                predicted_tgt_text = transliterate(model, src_text, src_vocab, tgt_vocab, device)
+
+                latin.append(src_text)
+                correct_native.append(actual_tgt_text)
+                predicted_native.append(predicted_tgt_text)
+    df = pd.DataFrame({
+        "Latin": latin,
+        "Correct Native": correct_native,
+        "Predicted Native": predicted_native
+    })
+    df["Correct"] = df["Correct Native"] == df["Predicted Native"]
+
+    excel_path = "test_predictions.xlsx"
+    df.to_excel(excel_path, index=False)
 
 if __name__ == "__main__":
     main()

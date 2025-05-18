@@ -59,6 +59,10 @@ python main.py \
   --dropout 0.2 \              # Dropout probability
   --num_epochs 20              # Training epochs
 
+``` bash
+  python main.py --model attention --batch_size 64 --learning_rate 0.001 --hidden_size 512 --num_layers 2 --cell_type LSTM --dropout 0.2  --num_epochs 2
+```
+
 
 ## Command Line Arguments
 

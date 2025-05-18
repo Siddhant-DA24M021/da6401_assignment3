@@ -1,6 +1,6 @@
 **Author**: Siddhant Baranwal (DA24M021)  
-**GitHub**: [GITHUB LINK]()  
-**Report**: [REPORT LINK]()
+**GitHub**: [GITHUB LINK](https://github.com/Siddhant-DA24M021/da6401_assignment3.git)  
+**Report**: [REPORT LINK](https://wandb.ai/da24m021-indian-institute-of-technology-madras/da24m021_da6401_assignment3/reports/DA6401-Assignment-3-DA24M021---VmlldzoxMjc5MDEyNg?accessToken=4mbvpuvktagn9rcbvixus7wwbwrpazy9fk712u370f1n6yfc639jffnkt0obu1or)
 
 
 

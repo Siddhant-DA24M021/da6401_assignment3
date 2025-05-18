@@ -12,11 +12,17 @@ This repository contains a sequence-to-sequence (Seq2Seq) model for transliterat
 
 ## Dataset Setup
 project_root/
-├── dakshina_dataset_v1.0/
+
+├── dakshina_dataset_v1.0/ 
+
 │   └── hi/
+
 │       └── lexicons/
+
 │           ├── hi.translit.sampled.train.tsv
+
 │           ├── hi.translit.sampled.dev.tsv
+
 │           └── hi.translit.sampled.test.tsv
 
 ## Dependencies

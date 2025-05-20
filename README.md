@@ -26,6 +26,23 @@ project_root/
 
 │           └── hi.translit.sampled.test.tsv
 
+## Files and Folder
+
+- da6401_assignment3.ipynb : Original .ipynb file
+
+- main.py : Training and Evaluating file
+
+- vanilla_seq2seq.py : Vanilla seq2seq model file
+- attention_seq2seq.py : Attention seq2seq model file
+
+- data_utils.py : File contains data loading and preprocessing codes
+- train_utils.py : Training code for the models
+- eval_utils.py : Evaluating and transliteration codes
+
+- predictions_vanilla : Contains predictions on test dataset using vanilla seq2seq model 
+- predictions_attention : Contains predictions on test dataset using attention seq2seq model
+
+
 ## Dependencies
 - Python 3.6+
 - PyTorch 2.0+
@@ -50,6 +67,8 @@ pip install torch pandas tqdm matplotlib
 
 
 # Using the model (Training and Evaluation)
+
+**IMPORTANT:- Add dataset and update dataset paths in the main.py.**
 python main.py \
   --model attention \          # Model type: vanilla/attention
   --batch_size 64 \            # Training batch size
